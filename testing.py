@@ -1,6 +1,15 @@
 print("Hello world")
-
+import kaggle
+from kaggle.api.kaggle_api_extended import KaggleApi
+import zipfile
 import os
+api = KaggleApi()
+api.authenticate()
+#Check if file exists
+if(os.path.isfile('./games.csv') != true){
+    api.dataset_download_file('arnabchaki/popular-video-games-1980-2023', file_name='games.csv')
+}
+with zipfile.ZipFile('games.csv.zip', 'r') as zipref: zipref.extractall()
 work = True
 while(work == True):
     print("Press 1 to launch Firefox.")
