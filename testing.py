@@ -7,9 +7,11 @@ import csv
 api = KaggleApi()
 api.authenticate()
 #Check if file exists
-if(os.path.isfile('./games.csv') != true){
+if os.path.isfile('./games.csv') != True:
     api.dataset_download_file('arnabchaki/popular-video-games-1980-2023', file_name='games.csv')
-}
+else:
+    print("File already exists")
+
 with zipfile.ZipFile('games.csv.zip', 'r') as zipref: zipref.extractall()
 work = True
 
