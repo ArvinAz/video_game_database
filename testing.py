@@ -3,6 +3,7 @@ import kaggle
 from kaggle.api.kaggle_api_extended import KaggleApi
 import zipfile
 import os
+import csv
 api = KaggleApi()
 api.authenticate()
 #Check if file exists
