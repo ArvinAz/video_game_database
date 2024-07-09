@@ -4,6 +4,7 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 import zipfile
 import os
 import csv
+import pandas as pd
 api = KaggleApi()
 api.authenticate()
 #Check if file exists
@@ -60,11 +61,19 @@ def devMenu():
         quiteCheck(x3)
     
 
+
+#Data menu
 def dataMenu():
     print("This is data menu")
-    print("Click on 5 to go back to main menu")
+    print("Type 1 to see data")
+    print("Type 5 to go back to main menu")
     x4 = input()
     if x4.isnumeric():
+        if int(x4) == 1:
+            df = pd.read_csv('games.csv')
+            print(df['Title'])
+            print(df.iloc[0])
+
         if int(x4) == 5:
             mainMenu()
     else:
