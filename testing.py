@@ -60,12 +60,42 @@ def devMenu():
     else:
         quiteCheck(x3)
     
+#Search for data
+def searchData():
+     search_Input = input("Please enter the game you want to find: ")
+     isFound = False
+     if(str(search_Input)== "Q" or str(search_Input)== "q"):
+        dataMenu()
+     else:
+         datagames = []
+
+         with open("games.csv", encoding="utf8") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    datagames.append(row)
+         #print(row)
+         #col = [x[1] for x in datagames]
+         col = [games for games in datagames]
+         col = [x[1] for x in col]
+         count = 0
+         for title in col:
+            count = count + 1
+            if search_Input in title:
+                isFound = True
+                print(str(count) + ": " + title)
+                
+         if(isFound == False):
+             print("Error: Game does not exist")
+             searchData()
+
+         
 
 
 #Data menu
 def dataMenu():
     print("This is data menu")
     print("Type 1 to see data")
+    print("Type 2 to search for game description")
     print("Type 5 to go back to main menu")
     x4 = input()
     if x4.isnumeric():
@@ -73,8 +103,9 @@ def dataMenu():
             df = pd.read_csv('games.csv')
             print(df['Title'])
             print(df.iloc[0])
-
-        if int(x4) == 5:
+        elif int(x4) == 2:
+            searchData()
+        elif int(x4) == 5:
             mainMenu()
     else:
         quiteCheck(x4)
