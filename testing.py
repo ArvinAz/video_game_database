@@ -5,16 +5,15 @@ import zipfile
 import os
 import csv
 import pandas as pd
-api = KaggleApi()
-api.authenticate()
-#Check if file exists
-if os.path.isfile('./games.csv') != True:
-    api.dataset_download_file('arnabchaki/popular-video-games-1980-2023', file_name='games.csv')
-else:
-    print("File already exists")
+import numpy as np
+import curses
 
-with zipfile.ZipFile('games.csv.zip', 'r') as zipref: zipref.extractall()
-work = True
+from pynput.keyboard import Key, Listener
+
+from curses import wrapper
+
+
+
 
 #functions 
 def mainMenu():
@@ -68,25 +67,67 @@ def searchData():
         dataMenu()
      else:
          datagames = []
+         searchedgames = []
 
          with open("games.csv", encoding="utf8") as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     datagames.append(row)
          #print(row)
-         #col = [x[1] for x in datagames]
-         col = [games for games in datagames]
-         col = [x[1] for x in col]
+         col = [x[1] for x in datagames]
+         #col = [games for games in datagames]
+         #col = [x[1] for x in col]
          count = 0
          for title in col:
             count = count + 1
-            if search_Input in title:
-                isFound = True
-                print(str(count) + ": " + title)
-                
-         if(isFound == False):
-             print("Error: Game does not exist")
-             searchData()
+            if search_Input.lower() in title.lower():
+                #Collects unique titles
+                if title not in searchedgames:
+                    searchedgames.append(title)
+            
+         reviewMenu(searchedgames, 0)       
+         if(len(searchedgames) == 0):
+            print("Error: Game does not exist")
+            searchData()
+
+
+#
+def reviewMenu(searchResults, page):
+
+    dict={}
+    count = 0
+    print("SELECT WHICH TO PICK GAME REVIEWS")
+
+    # TODO: Make the for loop run and get certain items depending on the page parameter.
+    #Example: 1 = 0-5; 2 = 6-11;
+    #Inserting data in
+    for x in searchResults:
+        dict[count] = x
+        count += 1
+    #for i in dict.keys():
+    #    print(str(i) + " : " +dict.get(i))
+        def show(key):
+        
+            print('\nYou Entered {0}'.format( key))
+        
+            if key == Key.right:
+                reviewMenu(searchResults, page + 1)
+            elif key == Key.left:
+                reviewMenu(searchResults, page - 1)
+
+    while(True):
+        i = 1 + (page * 6)
+        print("Page " + str(page + 1))
+        for i in range(i+7):
+            print(str(i) + " : " +dict.get(i))    
+
+
+        with Listener(on_press = show) as listener:   
+            listener.join()
+    
+
+
+
 
          
 
@@ -119,11 +160,21 @@ def quiteCheck(isquit):
         print("ERROR: Input is a string value")
     
 
+def main():
+    api = KaggleApi()
+    api.authenticate()
+    #Check if file exists
+    if os.path.isfile('./games.csv') != True:
+        api.dataset_download_file('arnabchaki/popular-video-games-1980-2023', file_name='games.csv')
+    else:
+        print("File already exists")
 
-x1 = 0
-while(x1 != "q" or x1 != "Q"):
-    mainMenu()
-    x1 = input()
+    with zipfile.ZipFile('games.csv.zip', 'r') as zipref: zipref.extractall()
+    work = True
+    x1 = 0
+    while(x1 != "q" or x1 != "Q"):
+        mainMenu()
+        x1 = input()
 
-    
-    
+
+main()
