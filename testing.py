@@ -118,7 +118,7 @@ def reviewMenu(searchResults, page):
     while(True):
         i = 1 + (page * 6)
         print("Page " + str(page + 1))
-        for i in range(i+7):
+        for i + (page * 6 in range(i+7):
             print(str(i) + " : " +dict.get(i))    
 
 
