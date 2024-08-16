@@ -103,7 +103,7 @@ def reviewMenu(searchResults, page):
     #Inserting data in
     for x in searchResults:
         dict[count] = x
-        count += 1
+        count += 1 
     #for i in dict.keys():
     #    print(str(i) + " : " +dict.get(i))
         def show(key):
@@ -117,8 +117,10 @@ def reviewMenu(searchResults, page):
 
     while(True):
         i = 1 + (page * 6)
+        if(i > len(dict)):
+            print("ODD")
         print("Page " + str(page + 1))
-        for i  in range(i+7):
+        for i  in range(i+6):
             print(str(i) + " : " +dict.get(i))    
 
 
