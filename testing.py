@@ -114,13 +114,15 @@ def reviewMenu(searchResults, page):
                 reviewMenu(searchResults, page + 1)
             elif key == Key.left:
                 reviewMenu(searchResults, page - 1)
+            elif key == Key.esc:
+                return False   
 
     while(True):
         i = 1 + (page * 6)
         if(i > len(dict)):
             print("ODD")
         print("Page " + str(page + 1))
-        for i  in range(i+6):
+        for i  in range(i+4):
             print(str(i) + " : " +dict.get(i))    
 
 
