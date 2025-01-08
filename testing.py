@@ -122,7 +122,7 @@ def reviewMenu(searchResults, page):
         if(i > len(dict)):
             print("ODD")
         print("Page " + str(page + 1))
-        for i  in range(i+6):
+        for i  in range(i+4):
             print(str(i) + " : " +dict.get(i))    
 
 
