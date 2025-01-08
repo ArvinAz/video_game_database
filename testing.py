@@ -114,6 +114,8 @@ def reviewMenu(searchResults, page):
                 reviewMenu(searchResults, page + 1)
             elif key == Key.left:
                 reviewMenu(searchResults, page - 1)
+            elif key == Key.esc:
+                return False   
 
     while(True):
         i = 1 + (page * 6)
